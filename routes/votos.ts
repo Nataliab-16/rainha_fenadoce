@@ -79,22 +79,4 @@ router.delete("/:id", async (req, res) => {
     }
 })
 
-try {    
-    const [voto, candidata] = await prisma.$transaction([
-        prisma.voto.delete({  
-            where: { id: Number(id) }
-    }),
-        prisma.candidata.update({
-            where: { id: candidataId },
-            data: { numVotos: {increment : 1}}
-        })
-    ])
-    res.status(201).json({voto, candidata})
-    
-} catch (error) {
-    res.status(400).json(error)
-}
-})
-
-
 export default router
